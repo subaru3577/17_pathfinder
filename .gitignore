@@ -12,6 +12,7 @@ cache
 
 # Running files
 notebooks/
+output/
 
 # IDE
 .vscode/
