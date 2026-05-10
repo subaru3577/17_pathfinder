@@ -13,7 +13,7 @@ A Python tool to generate interactive maps using OpenStreetMap data and GeoPanda
 ```bash
 git clone https://github.com/subaru3577/17_pathfinder.git
 cd 17_pathfinder
-uv pip install -e .
+uv sync
 ```
 
 ## Script for CLI

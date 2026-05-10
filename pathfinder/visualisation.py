@@ -17,7 +17,7 @@ def generate_map(
         raise TypeError(
             f"output_map_dir must be Path object, not {type(output_map_dir)}"
         )
-    map_obj = folium.Map(location=[centre.latitude, centre.longitude], zoom_start=10)
+    map_obj = folium.Map(location=[centre.latitude, centre.longitude], zoom_start=12)
 
     for name, df in dfs.items():
         df_vis = df.to_crs(epsg=4326)

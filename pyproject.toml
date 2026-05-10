@@ -36,3 +36,6 @@ pathfinder = "pathfinder.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["pathfinder*"]
+
+[tool.uv]
+package = true
