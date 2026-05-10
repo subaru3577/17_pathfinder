@@ -1,6 +1,12 @@
-# Pathfinder CLI
+## Pathfinder
 
-CLI tool for finding a path for running.
+A Python tool to generate interactive maps using OpenStreetMap data and GeoPandas.
+
+## Features
+- Get network for the designated area and coordinate for POI
+- Find path from POI within the designated distance suitable for running
+- Find places using OpenStreetMap Nominatim
+- Generate interactive maps and export as a HTML file
 
 ## Installation
 
@@ -16,3 +22,13 @@ uv pip install -e .
 ```bash
 uv run pathfinder "Leeds, United Kingdom" --start "Leeds Station"
 ```
+
+
+## Notes
+
+This project uses OpenStreetMap Nominatim API.
+Please respect usage policy: https://operations.osmfoundation.org/policies/nominatim/
+
+## License
+
+MIT

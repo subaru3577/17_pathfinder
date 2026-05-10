@@ -3,6 +3,8 @@ name = "pathfinder"
 version = "0.1.0"
 description = "Find path based on given conditions."
 readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Subaru"}]
 requires-python = ">=3.11"
 dependencies = [
     "folium>=0.20.0",

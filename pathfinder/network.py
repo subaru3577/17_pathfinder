@@ -1,6 +1,6 @@
 from typing import Literal
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import cached_property
 
 import pandas as pd
@@ -12,6 +12,8 @@ from shapely.geometry import LineString, Point
 
 
 logger = logging.getLogger(__name__)
+
+
 @dataclass
 class Coordinate:
     """Coordinate dataclass."""
@@ -32,20 +34,21 @@ class Coordinate:
             raise ValueError(f"Invalid longitude: {self.longitude}")
         if not (-90 <= self.latitude <= 90):
             raise ValueError(f"Invalid latitude: {self.latitude}")
-        
+
     @property
     def point(self) -> Point:
         """Shapely Point geometry using the coordinate."""
         return Point(self.longitude, self.latitude)
 
     @property
-    def point_crs_df(self, epsg:int = 27700) -> gpd.GeoDataFrame:
+    def point_crs_df(self, epsg: int = 27700) -> gpd.GeoDataFrame:
         """Return GeoDataframe with CRS 27700."""
         gdf = gpd.GeoDataFrame(geometry=[self.point], crs=4326)
-        return gdf.to_crs(epsg=epsg)        
+        return gdf.to_crs(epsg=epsg)
 
 
 _NETWORK_TYPE = Literal["walk", "drive"]
+
 
 class Network:
     """Network class for running analysis."""
@@ -112,11 +115,12 @@ class Network:
         - tolerance: Acceptable tolerance from search_distance (m).
 
         """
-        logger.info("Searching shortest path from \n"
-                    f"- from {source_coordinate}\n"
-                    f"- distance {search_distance}m\n"
-                    f"- tolerance {tolerance}m"
-                    )
+        logger.info(
+            "Searching shortest path from \n"
+            f"- from {source_coordinate}\n"
+            f"- distance {search_distance}m\n"
+            f"- tolerance {tolerance}m"
+        )
         if not isinstance(source_coordinate, Coordinate):
             raise TypeError(
                 f"source_coordinate must be tuple, not {type(source_coordinate)}"
@@ -154,19 +158,20 @@ class Network:
         paths_within_df["geometry"] = paths_within_df["path"].apply(
             lambda path: self._path_to_linestring(path)
         )
-        paths_within_df = (gpd.GeoDataFrame(
-            paths_within_df, geometry="geometry", crs=27700)
-            .drop(columns=['path'])
-            .rename(columns={'node': 'osmid'}))
+        paths_within_df = (
+            gpd.GeoDataFrame(paths_within_df, geometry="geometry", crs=27700)
+            .drop(columns=["path"])
+            .rename(columns={"node": "osmid"})
+        )
         paths_within_df["length"] = paths_within_df["geometry"].length.round(0)
-        paths_within_df['route_id'] = paths_within_df.index + 1
+        paths_within_df["route_id"] = paths_within_df.index + 1
 
         nodes_within_df = nodes_within_df.reset_index(drop=True)
-        nodes_within_df = nodes_within_df[['osmid', 'geometry']]
-        nodes_within_df['attribute'] = 'goal'
+        nodes_within_df = nodes_within_df[["osmid", "geometry"]]
+        nodes_within_df["attribute"] = "goal"
 
         start_point = source_coordinate.point_crs_df
-        start_point['attribute'] = 'start'
+        start_point["attribute"] = "start"
         nodes_within_df = pd.concat([nodes_within_df, start_point])
 
         return nodes_within_df, paths_within_df
