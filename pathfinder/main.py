@@ -1,4 +1,5 @@
 import logging
+import random
 from pathlib import Path
 
 from .network import Network
@@ -16,11 +17,12 @@ def find_running_routes(
     area_name: str,
     start_poi: str,
     search_distance: int,
+    random_select: bool = True,
     html_export: bool = True,
     gpkg_export: bool = False,
     **kwargs,
 ):
-    """Run the analysis.
+    """Find running routes analysis using pipeline.
 
     Argument:
     ----
@@ -37,10 +39,17 @@ def find_running_routes(
     network = Network(place_name=area_name)
     source_coordinate = get_poi_coordinates(start_poi)
     nodes_within_df, paths_within_df = network.find_distance_path_by_shortest(
-        source_coordinate=source_coordinate, search_distance=10000, **kwargs
+        source_coordinate=source_coordinate, search_distance=search_distance, **kwargs
     )
     logger.info(f"Found {len(paths_within_df)} path(s).")
     export_title = f"from_{start_poi.replace(' ', '_')}_{search_distance}m"
+
+    if random_select:
+        route_ids = list(paths_within_df["route_id"].unique())
+        selected = random.choice(route_ids)
+        logger.info(f"Selected route_id: {selected} for running.")
+        nodes_within_df = nodes_within_df[nodes_within_df["route_id"] == selected]
+        paths_within_df = paths_within_df[paths_within_df["route_id"] == selected]
 
     if html_export:
         vis_dfs = {"routes": paths_within_df, "points": nodes_within_df}

@@ -169,10 +169,12 @@ class Network:
         nodes_within_df = nodes_within_df.reset_index(drop=True)
         nodes_within_df = nodes_within_df[["osmid", "geometry"]]
         nodes_within_df["attribute"] = "goal"
-
-        start_point = source_coordinate.point_crs_df
-        start_point["attribute"] = "start"
-        nodes_within_df = pd.concat([nodes_within_df, start_point])
+        nodes_within_df = nodes_within_df.merge(
+            paths_within_df[["osmid", "route_id"]],
+            on="osmid",
+            how="left",
+            validate="1:1",
+        )
 
         return nodes_within_df, paths_within_df
 
