@@ -1,23 +1,47 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
+*.py[cod]
 build/
 dist/
 wheels/
 *.egg-info
 cache
+*.pyc
+*.pyo
+*.pyd
+
 
 # Virtual environments
-.venv
+.venv/
+.idea/
 
 # Running files
 notebooks/
 output/
 
+# Airflow
+logs/
+airflow-webserver.pid
+airflow-scheduler.pid
+airflow-worker.pid
+airflow.cfg
+airflow.db
+webserver_config.py
+
+# Docker
+.env
+
 # IDE
 .vscode/
 
-# macOS DS_Store
+# OS
 .DS_Store
+Thumbs.db
 
 .idea/
+
+# SQL
+*.db
+*.sqlite
+*.sqlite3

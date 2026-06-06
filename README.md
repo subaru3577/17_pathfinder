@@ -26,9 +26,11 @@ uv run pathfinder "Leeds, United Kingdom" --start "Leeds Station"
 
 ## Notes
 
-This project uses OpenStreetMap data and Nominatim API.  
+This project uses OpenStreetMap data, Nominatim API and Open-Meteo API.  
 © OpenStreetMap contributors.  
-Please respect usage policy: https://operations.osmfoundation.org/policies/nominatim/. 
+Please respect usage policies: 
+- https://operations.osmfoundation.org/policies/nominatim/
+- https://open-meteo.com/
 
 This project is not affiliated with OpenStreetMap Foundation.  
 
