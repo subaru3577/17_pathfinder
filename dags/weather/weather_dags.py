@@ -9,9 +9,6 @@ from airflow.decorators import dag, task
 
 SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL")
 
-if not SLACK_WEBHOOK_URL:
-    raise ValueError("SLACK_WEBHOOK_URL is not set in environment variables")
-
 
 @dag(
     dag_id="weather_to_slack",
@@ -36,12 +33,14 @@ def weather_to_slack():
 
     @task
     def notify_slack(weather):
+        if not SLACK_WEBHOOK_URL:
+            raise ValueError("SLACK_WEBHOOK_URL is not set in environment variables")
         if weather is None:
             message = "Today's weather is not suitable for running :("
         else:
             message = f"Today's recommended time for running: {weather}"
         payload = {"text": message}
-        res = requests.post(SLACK_WEBHOOK_URL, json=payload)
+        res = requests.post(SLACK_WEBHOOK_URL, json=payload, timeout=10)
         res.raise_for_status()
 
     coordinates_dict = get_coordinates()

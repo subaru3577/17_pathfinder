@@ -31,6 +31,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pre-commit>=4.5.1",
+    "pytest>=8.0.0",
+    "pytest-cov>=7.1.0",
+    "pytest-html>=4.2.0",
 ]
 
 [project.scripts]
@@ -41,3 +44,22 @@ include = ["pathfinder*"]
 
 [tool.uv]
 package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--cov=pathfinder",
+    "--cov-report=term-missing",
+    "--cov-report=html:reports/htmlcov",
+    "--cov-report=xml:reports/coverage.xml",
+    "--junitxml=reports/junit.xml",
+    "--html=reports/report.html",
+    "--self-contained-html",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["pathfinder"]
+
+[tool.coverage.report]
+show_missing = true

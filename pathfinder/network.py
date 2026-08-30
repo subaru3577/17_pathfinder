@@ -40,9 +40,8 @@ class Coordinate:
         """Shapely Point geometry using the coordinate."""
         return Point(self.longitude, self.latitude)
 
-    @property
     def point_crs_df(self, epsg: int = 27700) -> gpd.GeoDataFrame:
-        """Return GeoDataframe with CRS 27700."""
+        """Return GeoDataframe with the given CRS (default EPSG:27700)."""
         gdf = gpd.GeoDataFrame(geometry=[self.point], crs=4326)
         return gdf.to_crs(epsg=epsg)
 

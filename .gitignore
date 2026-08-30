@@ -45,3 +45,11 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
+# Test / coverage reports
+/reports/
+.coverage
+.coverage.*
+
+# Claude 
+.claude/
+.cursor*

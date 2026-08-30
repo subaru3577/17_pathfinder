@@ -61,7 +61,7 @@ def find_running_routes(
 
     if gpkg_export:
         output_path_dir = output_dir / f"path_{export_title}.gpkg"
-        output_point_dir = output_dir / f"path_{export_title}.gpkg"
+        output_point_dir = output_dir / f"point_{export_title}.gpkg"
         paths_within_df.to_file(output_path_dir)
         nodes_within_df.to_file(output_point_dir)
         logger.info("Exported result as gpkg files.")
